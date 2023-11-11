@@ -82,6 +82,8 @@ async function doTreeStuff() {
     const lastElements = document.querySelectorAll(".LAST-FILE");
     const repeatedEls = [];
     const uniqueEls = [];
+
+    // Get all last bookmarks and push the ones followed by <li> elements to an array
     lastElements.forEach(function (lastElement, i) {
         if (lastElement.nextElementSibling != null) {
             const nextElement = lastElement.nextElementSibling;
@@ -91,6 +93,7 @@ async function doTreeStuff() {
         }
     });
 
+    // Leave only one last bookmark per bookmark folder
     for (i = 0; i < repeatedEls.length; i++) {
         const current = repeatedEls[i];
         if (i > 0) {
@@ -101,6 +104,8 @@ async function doTreeStuff() {
         }
     }
 
+    // Select all <li> elements after the second to last <li> element with
+    // the 'LAST-FILE' class and move them to the root <ul>
     for (i = 0; i < uniqueEls.length; i++) {
         const lastElement = uniqueEls[i];
         const root = lastElement.closest('.root');
