@@ -289,6 +289,7 @@ body {
 .body-container {
     height: 100vh;
     padding: .6rem;
+    display: flex;
 }
 
 /*
@@ -299,9 +300,16 @@ body {
 
 .bookmark-list {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 
-.bookmark-list > li {
-    width: 7.142%;
+.root.inactive,
+.root.inactive > .file,
+.subroot.inactive {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.folder-title {
+    white-space: nowrap;
 }
