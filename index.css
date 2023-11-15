@@ -278,7 +278,7 @@ select::-webkit-scrollbar-thumb { }
 */
 
 body {
-    background-image: url('bg.gif');
+    background-image: url('bg4.gif');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -290,6 +290,7 @@ body {
     height: 100vh;
     padding: .6rem;
     display: flex;
+    flex-direction: column;
 }
 
 /*
@@ -300,7 +301,15 @@ body {
 
 .bookmark-list {
     display: flex;
-    flex-direction: column;
+}
+
+.bookmark-list * {
+    white-space: nowrap;
+}
+
+.folder {
+    width: 6.67%;
+    position: relative;
 }
 
 .root.inactive,
@@ -310,6 +319,7 @@ body {
     overflow: hidden;
 }
 
-.folder-title {
-    white-space: nowrap;
+.root {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.413);
 }

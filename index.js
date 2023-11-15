@@ -86,13 +86,13 @@ async function doTreeStuff() {
         bookmarkMenu.setAttribute("class", "folder");
 
         bookmarkMenu.innerHTML = `
-        <a href="#" class="folder-title">
+        <a href="#" id="${'master-' + i}" class="folder-title">
             <span class="folder-icon">🗀</span>
             <span class="folder-name">${element.name}</span>
         </a>`;
 
         const subList = document.createElement('ul');
-        subList.setAttribute('class', 'root inactive')
+        subList.setAttribute('class', 'root inactive');
 
         bookmarkMenu.appendChild(subList);
 
@@ -102,17 +102,6 @@ async function doTreeStuff() {
     });
 
     const masters = document.querySelectorAll(".folder-title");
-
-    const files = document.getElementsByClassName("file");
-    const margins = document.getElementsByClassName("subfolder");
-
-    // Apply margins to file structure view
-    for (let i = 0; i < margins.length; i++) {
-        margins[i].style.paddingLeft = '21px';
-    }
-    for (let i = 0; i < files.length; i++) {
-        files[i].style.paddingLeft = '25px';
-    }
     
     // Open and close root folders
     masters.forEach(function(master, i) {
@@ -127,6 +116,17 @@ async function doTreeStuff() {
             } else {
                 icon.innerHTML = "🗀"
             }
+
+            masters.forEach(function(otherMaster) {
+                if (otherMaster != master) {
+                    const children = otherMaster.parentElement.childNodes[2];
+                    const icon = otherMaster.childNodes[1];
+
+                    children.classList.add("inactive");
+
+                    icon.innerHTML = "🗀"
+                }
+            });
         });
     });
 
@@ -147,6 +147,21 @@ async function doTreeStuff() {
             }
         });
     }
+
+    // Close open bookmark tree on window click
+    const masterTarget = '.folder-title'
+
+    window.addEventListener('click', function (event) {
+        masters.forEach(function(master) {
+            if (!event.target.closest(masterTarget)) {
+                const children = master.parentElement.childNodes[2];
+                const icon = master.childNodes[1];
+
+                children.classList.add('inactive');
+                icon.innerHTML = "🗀"
+            }
+        });
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
