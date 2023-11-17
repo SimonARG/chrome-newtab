@@ -33,21 +33,23 @@ async function doTreeStuff() {
 
     // Function to recursively iterate through the bookmark menu render it
     function recurseRender(element, parent) {
-        element.subitems.forEach(function(subElement) {
+        element.subitems.forEach(function(subElement, i) {
             if (subElement.subitems) {
                 const bookmarkSubMenu = document.createElement('li');
                 bookmarkSubMenu.setAttribute("class", "subfolder inactive");
         
                 bookmarkSubMenu.innerHTML = `
-                <a href="#" class="subfolder-title">
+                <a href="#" class="subfolder-title inactive">
                     <span class="subfolder-icon">🗀</span>
                     <span class="subfolder-name">${subElement.name}</span>
                 </a>`;
 
                 const subSubList = document.createElement('ul');
+                const subSubListContainer = document.createElement('div');
                 subSubList.setAttribute('class', 'subroot inactive')
         
-                bookmarkSubMenu.appendChild(subSubList);
+                subSubListContainer.appendChild(subSubList)
+                bookmarkSubMenu.appendChild(subSubListContainer);
 
                 parent.appendChild(bookmarkSubMenu);
 
@@ -58,7 +60,7 @@ async function doTreeStuff() {
         
                 bookmarkLink.innerHTML = `
                 <a target="_blank" href="${subElement.link}" class="file-title">
-                    <span class="file-icon"></span>
+                    <span class="file-icon">🗋</span>
                     <span class="file-name">${subElement.name}</span>
                 </a>`;
 
@@ -86,16 +88,17 @@ async function doTreeStuff() {
         bookmarkMenu.setAttribute("class", "folder");
 
         bookmarkMenu.innerHTML = `
-        <a href="#" id="${'master-' + i}" class="folder-title">
+        <a href="#" class="folder-title">
             <span class="folder-icon">🗀</span>
             <span class="folder-name">${element.name}</span>
         </a>`;
 
         const subList = document.createElement('ul');
+        const subListParent = document.createElement('div');
         subList.setAttribute('class', 'root inactive');
 
-        bookmarkMenu.appendChild(subList);
-
+        subListParent.appendChild(subList)
+        bookmarkMenu.appendChild(subListParent);
         bookmarkList.appendChild(bookmarkMenu);
 
         recurseRender(element, subList);
@@ -104,9 +107,9 @@ async function doTreeStuff() {
     const masters = document.querySelectorAll(".folder-title");
     
     // Open and close root folders
-    masters.forEach(function(master, i) {
+    masters.forEach(function(master) {
         master.addEventListener("click", function () {
-            const children = this.parentElement.childNodes[2];
+            const children = this.parentElement.childNodes[2].childNodes[0];
             const icon = this.childNodes[1];
 
             children.classList.toggle("inactive");
@@ -119,7 +122,7 @@ async function doTreeStuff() {
 
             masters.forEach(function(otherMaster) {
                 if (otherMaster != master) {
-                    const children = otherMaster.parentElement.childNodes[2];
+                    const children = otherMaster.parentElement.childNodes[2].childNodes[0];
                     const icon = otherMaster.childNodes[1];
 
                     children.classList.add("inactive");
@@ -130,31 +133,48 @@ async function doTreeStuff() {
         });
     });
 
-    const folders = document.querySelectorAll(".subfolder-title");
-
+    const subFolders = document.querySelectorAll(".subfolder-title");
+    
     // Open and close sub-folders
-    for (let i = 0; i < folders.length; i++) {
-        folders[i].addEventListener("click", function () {
-            const children = this.parentElement.childNodes[2];
+    subFolders.forEach(function (subFolder, i) {
+        subFolder.addEventListener('click', function(event) {
+            const children = this.parentElement.childNodes[2].childNodes[0];
             const icon = this.childNodes[1];
-
+    
             children.classList.toggle("inactive");
-
+    
             if (icon.innerHTML == "🗀") {
                 icon.innerHTML = "🗁";
             } else {
                 icon.innerHTML = "🗀"
             }
+
+            subFolders.forEach(function (otherFolder) {
+                if (otherFolder != subFolders[i]) {
+                    const parent = subFolder.parentElement.parentElement.parentElement.nodeName;
+
+                    if (!event.target.closest(parent)) {
+                        console.log(parent);
+                        const children = otherFolder.parentElement.childNodes[2].childNodes[0];
+                        const icon = otherFolder.childNodes[1];
+            
+                        children.classList.add("inactive");
+            
+                        icon.innerHTML = "🗀"
+                    }
+                }
+            });
         });
-    }
+    });
+
 
     // Close open bookmark tree on window click
-    const masterTarget = '.folder-title'
+    const masterTarget = '.bookmark-list';
 
     window.addEventListener('click', function (event) {
         masters.forEach(function(master) {
             if (!event.target.closest(masterTarget)) {
-                const children = master.parentElement.childNodes[2];
+                const children = master.parentElement.childNodes[2].childNodes[0];
                 const icon = master.childNodes[1];
 
                 children.classList.add('inactive');
