@@ -196,14 +196,12 @@ async function createShortcuts() {
             data.forEach(shortcut => {
                 shortcuts.push(shortcut);
             });
-            console.log(shortcuts);
     
             // Fetch shortcut bar element
             const shortcutbar = document.querySelector(".shortcutbar");
 
             // Parse shortcuts from array into <a> elements and append to shortcut bar
             shortcuts.forEach(function(shortcut) {
-                console.log('meme');
                 const newShortcut = document.createElement("a");
 
                 newShortcut.classList.add("grow-on-hover");
