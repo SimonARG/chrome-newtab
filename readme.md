@@ -9,7 +9,9 @@
 5. Click **Load unpacked** and select the folder where the new tab was unzipped.
 6. Your folder will appear as an extension, you can now toggle developer mode off and open a new tab.
 
-- Add an image inside the `imgs` folder and modify the line 20 of *index.html* accordingly to change the background image: `<img class="bg" src="./imgs/FileName.FileExtension">`
+- Create `imgs` folder with `logos` subfolder.
+
+- Add an image inside the `imgs` folder and modify the line 20 of *index.html* accordingly to change the background image: `<img class="bg" src="./imgs/FileName.FileExtension">`.
 
 - Add an image inside the `imgs` with the filename `favicon.png` to change the tab icon.
 
