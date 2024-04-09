@@ -182,85 +182,51 @@ async function doTreeStuff() {
     });
 }
 
+async function createShortcuts() {
+    // Define shortcut array
+    const shortcuts = [];
+
+    // Populate shortcuts array from shortcuts.json
+    const xhr = new XMLHttpRequest();
+    xhr.overrideMimeType("application/json");
+    xhr.open('GET', 'shortcuts.json', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+            data.forEach(shortcut => {
+                shortcuts.push(shortcut);
+            });
+            console.log(shortcuts);
+    
+            // Fetch shortcut bar element
+            const shortcutbar = document.querySelector(".shortcutbar");
+
+            // Parse shortcuts from array into <a> elements and append to shortcut bar
+            shortcuts.forEach(function(shortcut) {
+                console.log('meme');
+                const newShortcut = document.createElement("a");
+
+                newShortcut.classList.add("grow-on-hover");
+                newShortcut.href = shortcut.url;
+                newShortcut.target = "_blank"
+
+                const logo = document.createElement("img");
+                
+                logo.classList.add("logo");
+                logo.src = shortcut.logo;
+
+                newShortcut.appendChild(logo);
+
+                shortcutbar.appendChild(newShortcut);
+            });
+        }
+    };
+    xhr.send(null);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     doTreeStuff();
-
-    // Define shortcut array
-    const shortcuts = [
-        whatsapp = {
-            url: "https://web.whatsapp.com/",
-            logo: "./imgs/logos/wpp.png"
-        },
-        reddit = {
-            url: "https://www.reddit.com/",
-            logo: "./imgs/logos/reddit.png"
-        },
-        youtube = {
-            url: "https://www.youtube.com/feed/subscriptions",
-            logo: "./imgs/logos/yt.png"
-        },
-        gmail = {
-            url: "https://mail.google.com/mail/u/0/",
-            logo: "./imgs/logos/gmail.png"
-        },
-        dgg = {
-            url: "https://www.destiny.gg/bigscreen",
-            logo: "./imgs/logos/dgg.png"
-        },
-        fourchan = {
-            url: "https://www.4chan.org/",
-            logo: "./imgs/logos/4chan.png"
-        },
-        x = {
-            url: "https://twitter.com/home",
-            logo: "./imgs/logos/x.png"
-        },
-        instagram = {
-            url: "https://www.instagram.com/",
-            logo: "./imgs/logos/insta.png"
-        },
-        jpopsuki = {
-            url: "https://jpopsuki.eu/",
-            logo: "./imgs/logos/jps.png"
-        },
-        facebook = {
-            url: "https://www.facebook.com/",
-            logo: "./imgs/logos/fb.png"
-        },
-        mp = {
-            url: "https://www.mercadopago.com.ar/home",
-            logo: "./imgs/logos/mp.png"
-        },
-        ml = {
-            url: "https://www.mercadolibre.com.ar",
-            logo: "./imgs/logos/ml.png"
-        },
-        subsplease = {
-            url: "https://web.whatsapp.com/",
-            logo: "./imgs/logos/subsplease.png"
-        },
-    ]
-
-    // Fetch shortcut bar element
-    const shortcutbar = document.querySelector(".shortcutbar");
-
-    // Parse shortcuts from array into <a> elements and append to shortcut bar
-    shortcuts.forEach(function(shortcut) {
-        const newShortcut = document.createElement("a");
-
-        newShortcut.classList.add("grow-on-hover");
-        newShortcut.href = shortcut.url;
-        newShortcut.target = "_blank"
-
-        const logo = document.createElement("img");
-        
-        logo.classList.add("logo");
-        logo.src = shortcut.logo;
-
-        newShortcut.appendChild(logo);
-
-        shortcutbar.appendChild(newShortcut);
-    });
+    createShortcuts();
 
     // Fetch background image
     const background = document.querySelector(".bg");
