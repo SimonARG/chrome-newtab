@@ -15,7 +15,7 @@
 
 - Add an image inside the `imgs` with the filename `favicon.png` to change the tab icon.
 
-- For each **shortcut** desired in the **shortcut bar**, add an *object* to the array in `shortcuts.json`, where the property `url` is the website's URL, and the property `logo` is the path to the website's logo. Example:
+- To add shortcuts, first create a file in the root folder called "shortcuts.json". For each **shortcut** desired in the **shortcut bar**, add an *object* to the array in `shortcuts.json`, where the property `url` is the website's URL, and the property `logo` is the path to the website's logo. Example:
 ```json
 [
     {
