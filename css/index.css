@@ -286,7 +286,7 @@ ul {
 }
 
 .blur-effect {
-    filter: brightness(50%) blur(2px);
+    filter: brightness(70%) blur(2px);
 }
 
 /*
