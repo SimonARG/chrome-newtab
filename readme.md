@@ -14,15 +14,17 @@
 - Add an image inside the `imgs` with the filename `favicon.png` to change the tab icon.
 
 - For each **shortcut** desired in the **shortcut bar**, add an *object* to the array in `shortcuts.json`, where the property `url` is the website's URL, and the property `logo` is the path to the website's logo. Example:
-    	[
-    		{
-    			"name": "reddit",
-    			"url": "https://www.reddit.com/",
-    			"logo": "./imgs/logos/reddit.png"
-    	},
-    	{
-    			"name": "youtube",
-    			"url": "https://www.youtube.com/feed/subscriptions",
-    			"logo": "./imgs/logos/yt.png"
-    		},
-    	]
+```json
+[
+    {
+        "name": "reddit",
+        "url": "https://www.reddit.com/",
+        "logo": "./imgs/logos/reddit.png"
+    },
+    {
+        "name": "youtube",
+        "url": "https://www.youtube.com/feed/subscriptions",
+        "logo": "./imgs/logos/yt.png"
+    },
+]
+```
