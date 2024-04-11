@@ -189,7 +189,7 @@ async function createShortcuts() {
     // Populate shortcuts array from shortcuts.json
     const xhr = new XMLHttpRequest();
     xhr.overrideMimeType("application/json");
-    xhr.open('GET', 'shortcuts.json', true);
+    xhr.open('GET', 'data/shortcuts.json', true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
             const data = JSON.parse(xhr.responseText);
