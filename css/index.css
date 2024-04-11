@@ -9,6 +9,8 @@
     --bg-bookmark-a: rgba(0, 0, 0, 0.800);
     --bg-bookmark--scrl: rgba(0, 0, 0, 0.676);
     font-size: 16px;
+    --text-shadow: 1px 0 black, -1px 0 black, 0 1px black, 0 -1px black,
+    1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
 }
 
 /*
@@ -286,7 +288,19 @@ ul {
 }
 
 .blur-effect {
+    filter: blur(3px);
+}
+
+.blur-dark-effect {
     filter: brightness(70%) blur(2px);
+}
+
+.grow-on-hover {
+    transition: transform 0.1s;
+}
+  
+.grow-on-hover:hover {
+    transform: scale(1.075);
 }
 
 /*
@@ -328,8 +342,7 @@ ul {
 .bookmark-list {
     display: flex;
     z-index: 10;
-    text-shadow: 1px 0 black, -1px 0 black, 0 1px black, 0 -1px black,
-             1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
+    text-shadow: var(--text-shadow)
 }
 
 .bookmark-list * {
@@ -419,12 +432,28 @@ ul {
     text-overflow: ellipsis;
 }
 
+.popup {
+    display: flex;
+}
+
+/*
+|------------------------------------------------------------
+| Searchbar
+|------------------------------------------------------------
+*/
+
 form {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40%;
 }
+
+/*
+|------------------------------------------------------------
+| Shortcuts
+|------------------------------------------------------------
+*/
 
 .links-container {
     height: 50vh;
@@ -460,10 +489,57 @@ form {
             drop-shadow(0px -1px 0 black);
 }
 
-.grow-on-hover {
-    transition: transform 0.1s linear;
+/*
+|------------------------------------------------------------
+| Config
+|------------------------------------------------------------
+*/
+
+.gear {
+    position: fixed;
+    bottom: 1%;
+    left: 1%;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
 }
-  
-.grow-on-hover:hover {
-    transform: scale(1.075);
+
+.config-container {
+    position: fixed;
+    font-size: 1.2rem;
+    color: white;
+    top: 45%;
+    text-shadow: var(--text-shadow);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-bookmark);
+    visibility: hidden;
+    display: flex;
+    padding: .8rem 2rem;
+    opacity: 0;
+    transition: all .2s;
+}
+
+.config {
+    padding: .5rem;
+}
+
+.show {
+    visibility: visible;
+    transition: all .2s;
+    opacity: 1;
+}
+
+.bg-btn {
+    cursor: pointer;
+    border: 1px solid white;
+    padding: .3rem .5rem;
+}
+
+.bg-btn:hover {
+    background-color: var(--bg-bookmark-h);
+}
+
+.bg-btn:active {
+    background-color: var(--bg-bookmark-a);
 }

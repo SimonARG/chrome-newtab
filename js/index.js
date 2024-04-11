@@ -223,26 +223,96 @@ async function createShortcuts() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    // Define background image path and DOM element
+    let bgPath = '';
+    const bg = document.querySelector('.bg');
+
+    // Fetch background image path from local storage
+    bgPath = localStorage.getItem("bgPath");
+
+    // Replace img element src attribute
+    bg.src = bgPath;
+
     doTreeStuff();
+
     createShortcuts();
 
     // Fetch background image
     const background = document.querySelector(".bg");
 
+    // Fetch searchbar
+    const searchbar = document.querySelector('.fillable');
+
     // Apply filters to background image on interaction with searchbar
-    document.querySelector('.fillable').addEventListener('mouseenter', function() {
+    searchbar.addEventListener('mouseenter', function() {
         background.classList.add('dark-effect');
     });
 
-    document.querySelector('.fillable').addEventListener('focus', function() {
-        background.classList.add('blur-effect');
+    searchbar.addEventListener('focus', function() {
+        background.classList.add('blur-dark-effect');
     });
 
-    document.querySelector('.fillable').addEventListener('blur', function() {
-        background.classList.remove('blur-effect');
+    searchbar.addEventListener('blur', function() {
+        background.classList.remove('blur-dark-effect');
     });
 
-    document.querySelector('.fillable').addEventListener('mouseleave', function() {
+    searchbar.addEventListener('mouseleave', function() {
         background.classList.remove('dark-effect');
     });
+
+    // Open or close config popup on click of gear
+    const gear = document.querySelector('.gear'),
+          config = document.querySelector('.config-container');
+
+    let configStatus = false;
+
+    function toggleConfig() {
+        config.classList.toggle('show');
+        configStatus = !configStatus;
+
+        if (configStatus) {
+            background.classList.add('blur-effect');
+        } else {
+            background.classList.remove('blur-effect');
+        }
+    }
+
+
+    // Toggle config window on click of gear
+    gear.addEventListener('click', function(event) {
+        event.stopPropagation();
+        toggleConfig();
+    });
+    
+    // Close config window on click of body
+    document.body.addEventListener('click', function(event) {
+        if (configStatus && !config.contains(event.target) && event.target !== gear) {
+            toggleConfig();
+        }
+    });
+
+    // Get background image input label element
+    const bgInputBtn = document.querySelector('.bg-btn');
+
+    // Get background image file input element
+    const bgInput = document.getElementById('bg-input');
+
+    bgInput.addEventListener('change', function() {
+        // Get background image file object
+        const bgFile = bgInput.files[0];
+
+        console.log(bgFile);
+
+        // Get the file name
+        const fileName = bgFile.name;
+
+        // Parse into path
+        let path = './imgs/' + fileName;
+
+        // Store the file name in local storage
+        localStorage.setItem('bgPath', path);
+
+        // Replace img element src attribute
+        bg.src = path;
+    })
 });
