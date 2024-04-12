@@ -7,7 +7,7 @@
 
     <title>⠀</title>
 
-    <link rel="icon" type="image/x-icon" href="./imgs/favicon.png">
+    <link class="favicon" rel="icon" type="image/x-icon" href="">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
             <ul class="bookmark-list"></ul>
         </div>
 
-        <form method="get" action="https://www.google.com/search">
+        <form class="searchbar" method="get" action="https://www.google.com/search">
             <input autocomplete="off" class="fillable" type="text" name="q">
         </form>
 
@@ -35,13 +35,28 @@
         </div>
     </div>
 
-    <span class="gear grow-on-hover" alt="Config">⚙</span>
+    <span class="gear grow-on-hover">⚙</span>
 
     <div class="config-container">
-        <div class="config">
+        <div class="config flex-c f-just-cent">
             <input type="file" id="bg-input" hidden>
-            <label class="bg-btn" for="bg-input">Change Background</label>
+            <label class="bg-btn btn" for="bg-input">Change Background</label>
+
+            <input type="file" id="favicon-input" hidden>
+            <label class="favicon-btn btn" for="favicon-input">Change Tab Icon</label>
+
+            <span class="shortcut-new btn">New Shortcut</span>
         </div>
+    </div>
+
+    <div class="new-container">
+        <form class="new flex-c f-just-cent">
+            <input type="text" id="new-name-input" placeholder="name">
+            <input type="text" id="new-url-input" placeholder="URL">
+            <input type="file" id="new-icon-input" hidden>
+            <label class="new-icon-btn btn" for="new-icon-input">Select Icon</label>
+            <button class="btn new-shortcut-submit">Done</button>
+        </form>
     </div>
 
     <script src="./js/index.js"></script>

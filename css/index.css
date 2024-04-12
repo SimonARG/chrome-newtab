@@ -274,6 +274,20 @@ ul {
 .btn {
     cursor: pointer;
     outline: none;
+    border: 1px solid white;
+    color: white;
+    padding: .3rem .5rem;
+    text-align: center;
+    background-color: transparent;
+    text-shadow: var(--text-shadow);
+}
+
+.btn:hover {
+    background-color: var(--bg-bookmark-h);
+}
+
+.btn:active {
+    background-color: var(--bg-bookmark-a);
 }
 
 .logo {
@@ -442,7 +456,7 @@ ul {
 |------------------------------------------------------------
 */
 
-form {
+.searchbar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -466,19 +480,27 @@ form {
     height: fit-content;
 }
 
-.links > a {
-    padding: 5px;
+.shortcut-container {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
 }
 
-.links > a:hover {
+.shortcut {
+    padding: 5px;
+    height: fit-content;
+    display: block;
+}
+
+.shortcut:hover {
     background-color: var(--bg-bookmark-h);
 }
 
-.links > a:active {
+.shortcut:active {
     background-color: var(--bg-bookmark-a);
 }
 
-.links > a > img {
+.shortcut > img {
     -webkit-filter: drop-shadow(1px 1px 0 black)
                     drop-shadow(-1px 1px 0 black)
                     drop-shadow(1px -1px 0 black)
@@ -522,24 +544,114 @@ form {
 
 .config {
     padding: .5rem;
+    gap: .7rem;
 }
 
-.show {
+.config-container.show {
     visibility: visible;
     transition: all .2s;
     opacity: 1;
 }
 
-.bg-btn {
-    cursor: pointer;
-    border: 1px solid white;
-    padding: .3rem .5rem;
+/*
+|------------------------------------------------------------
+| Context menu
+|------------------------------------------------------------
+*/
+
+.context-menu {
+    position: absolute;
+    text-shadow: var(--text-shadow);
+    bottom: 120%;
+    right: -20%;
+    background-color: var(--bg-bookmark);
+    z-index: 1000;
+    visibility: hidden;
+    color: white;
+    opacity: 0;
+    transition: all .2s ease;
 }
 
-.bg-btn:hover {
+.context-menu ul {
+    padding: .5rem;
+    list-style-type: none;
+    gap: .4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+|------------------------------------------------------------
+| Edit shortcut
+|------------------------------------------------------------
+*/
+
+.edit-container, .new-container {
+    position: fixed;
+    font-size: 1.2rem;
+    color: white;
+    top: 45%;
+    text-shadow: var(--text-shadow);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-bookmark);
+    visibility: hidden;
+    display: flex;
+    padding: .8rem 2rem;
+    opacity: 0;
+    transition: all .2s;
+}
+
+.edit, .new {
+    padding: .5rem;
+    gap: .7rem;
+}
+
+.edit-container.show, .new-container.show {
+    visibility: visible;
+    transition: all .2s;
+    opacity: 1;
+}
+
+.edit input[type="text"],
+.new input[type="text"] {
+    font-size: 1.2rem;
+    outline: none;
+    text-align: center;
+    padding: .3rem .5rem;
+    background-color: transparent;
+    border: 1px dashed white;
+    border-left: none;
+    border-right: none;
+    color: white;
+    width: 18rem;
+}
+
+.edit input[type="text"]::-moz-selection,
+.new input[type="text"]::-moz-selection {
+    color: black;
+    background: white;
+}
+  
+.edit input[type="text"]::selection,
+.new input[type="text"]::selection {
+    color: black;
+    background: white;
+}
+
+.edit input[type="text"]:hover,
+.edit input[type="text"]:focus,
+.new input[type="text"]:hover,
+.new input[type="text"]:focus {
     background-color: var(--bg-bookmark-h);
 }
 
-.bg-btn:active {
+.edit input[type="text"]:active,
+.new input[type="text"]:active {
     background-color: var(--bg-bookmark-a);
+}
+
+.edit button,
+.new button {
+    font-size: 1.2rem;
 }

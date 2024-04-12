@@ -182,46 +182,6 @@ async function doTreeStuff() {
     });
 }
 
-async function createShortcuts() {
-    // Define shortcut array
-    const shortcuts = [];
-
-    // Populate shortcuts array from shortcuts.json
-    const xhr = new XMLHttpRequest();
-    xhr.overrideMimeType("application/json");
-    xhr.open('GET', 'data/shortcuts.json', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            const data = JSON.parse(xhr.responseText);
-            data.forEach(shortcut => {
-                shortcuts.push(shortcut);
-            });
-    
-            // Fetch shortcut bar element
-            const shortcutbar = document.querySelector(".shortcutbar");
-
-            // Parse shortcuts from array into <a> elements and append to shortcut bar
-            shortcuts.forEach(function(shortcut) {
-                const newShortcut = document.createElement("a");
-
-                newShortcut.classList.add("grow-on-hover");
-                newShortcut.href = shortcut.url;
-                newShortcut.target = "_blank"
-
-                const logo = document.createElement("img");
-                
-                logo.classList.add("logo");
-                logo.src = shortcut.logo;
-
-                newShortcut.appendChild(logo);
-
-                shortcutbar.appendChild(newShortcut);
-            });
-        }
-    };
-    xhr.send(null);
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     // Define background image path and DOM element
     let bgPath = '';
@@ -233,9 +193,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Replace img element src attribute
     bg.src = bgPath;
 
-    doTreeStuff();
+    // Define favicon image path and DOM element
+    let faviconPath = '';
+    const favicon = document.querySelector('.favicon');
 
-    createShortcuts();
+    // Fetch favicon image path from local storage
+    faviconPath = localStorage.getItem("faviconPath");
+
+    // Replace img element src attribute
+    favicon.href = faviconPath;
+
+    doTreeStuff();
 
     // Fetch background image
     const background = document.querySelector(".bg");
@@ -291,17 +259,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Get background image input label element
-    const bgInputBtn = document.querySelector('.bg-btn');
-
     // Get background image file input element
     const bgInput = document.getElementById('bg-input');
 
     bgInput.addEventListener('change', function() {
         // Get background image file object
         const bgFile = bgInput.files[0];
-
-        console.log(bgFile);
 
         // Get the file name
         const fileName = bgFile.name;
@@ -315,4 +278,344 @@ document.addEventListener("DOMContentLoaded", function() {
         // Replace img element src attribute
         bg.src = path;
     })
+
+    // Get favicon image file input element
+    const faviconInput = document.getElementById('favicon-input');
+
+    faviconInput.addEventListener('change', function() {
+        // Get favicon image file object
+        const faviconFile = faviconInput.files[0];
+
+        // Get the file name
+        const fileName = faviconFile.name;
+
+        // Parse into path
+        let path = './imgs/' + fileName;
+
+        // Store the file name in local storage
+        localStorage.setItem('faviconPath', path);
+
+        // Replace img element src attribute
+        favicon.href = path;
+    })
+
+    // Fetch shortcuts path from local storage and push to array
+    storedShortcuts = localStorage.getItem("shortcuts");
+
+    // Parse JSON
+    const shortcuts = JSON.parse(storedShortcuts);
+
+    // Fetch shortcut bar element
+    const shortcutbar = document.querySelector(".shortcutbar");
+
+    // Parse shortcuts from array into <a> elements and append to shortcut bar
+    function parseShortcuts() {
+        shortcuts.forEach(function(shortcut, i) {
+            const newShortcut = document.createElement("a");
+
+            newShortcut.classList.add("grow-on-hover", "shortcut");
+            newShortcut.href = shortcut.url;
+            newShortcut.target = "_blank"
+
+            const logo = document.createElement("img");
+            
+            logo.classList.add("logo");
+            logo.src = shortcut.logo;
+
+            newShortcut.appendChild(logo);
+
+            const shortcutContainer = document.createElement("div");
+            shortcutContainer.classList.add("shortcut-container")
+
+            const contextMenu = document.createElement("div");
+            contextMenu.classList.add("context-menu");
+
+            const contextMenuUl = document.createElement("ul");
+
+            const editShortcut = document.createElement("li");
+            const delShortcut = document.createElement("li");
+            editShortcut.classList.add("btn", "btn-edit");
+            delShortcut.classList.add("btn", "btn-del");
+            editShortcut.textContent = "Edit";
+            delShortcut.textContent = "Delete";
+
+            contextMenuUl.appendChild(editShortcut);
+            contextMenuUl.appendChild(delShortcut);
+
+            contextMenu.appendChild(contextMenuUl);
+
+            shortcutContainer.appendChild(contextMenu);
+
+            const editContainer = document.createElement("div");
+            editContainer.classList.add('edit-container', 'edit-' + i)
+            const editDiv = document.createElement("div");
+            editDiv.classList.add("edit", "flex-c", "f-just-cent");
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.id = "name-input-" + i;
+            nameInput.placeholder = "name";
+            const urlInput = document.createElement("input");
+            urlInput.type = "text";
+            urlInput.id = "url-input-" + i;
+            urlInput.placeholder = "URL";
+            const iconInput = document.createElement("input");
+            iconInput.type = "file";
+            iconInput.id = "icon-input-" + i;
+            iconInput.hidden = true;
+            const iconLabel = document.createElement("label");
+            iconLabel.classList.add("icon-btn", "btn");
+            iconLabel.setAttribute("for", "icon-input-" + i);
+            iconLabel.innerText = "Change Icon";
+            const submitBtn = document.createElement("button");
+            submitBtn.classList.add("btn", "shortcut-submit-" + i);
+            submitBtn.innerHTML = "Done";
+
+            editDiv.appendChild(nameInput);
+            editDiv.appendChild(urlInput);
+            editDiv.appendChild(iconInput);
+            editDiv.appendChild(iconLabel);
+            editDiv.appendChild(submitBtn);
+            editContainer.appendChild(editDiv);
+
+            shortcutContainer.appendChild(newShortcut);
+            shortcutContainer.appendChild(editContainer);
+            shortcutbar.appendChild(shortcutContainer);
+
+            // Right-click event listener to show context menu
+            newShortcut.addEventListener("contextmenu", function(event) {
+                event.preventDefault();
+
+                // Hide any other open context menus
+                document.querySelectorAll('.context-menu').forEach(function(menu) {
+                    if (menu !== contextMenu) {
+                        menu.style.visibility = "hidden";
+                        menu.style.opacity = "0";
+                    }
+                });
+
+                // Show context menu
+                contextMenu.style.visibility = "visible";
+                contextMenu.style.opacity = "1";
+            });
+
+            // Close context menu on left or right outside click
+            document.addEventListener("mousedown", function(clickEvent) {
+                if (!contextMenu.contains(clickEvent.target)) {
+                    contextMenu.style.visibility = "hidden";
+                    contextMenu.style.opacity = "0";
+                }
+            });
+        });
+
+        shortcutContext();
+    }
+
+    parseShortcuts();
+
+    function shortcutContext() {
+        // Select the context menu of each shortcut
+        const domShortcuts = document.querySelectorAll('.shortcut');
+
+        // For each context menu, perform its button's actions
+        domShortcuts.forEach(function(domShortcut, i) {
+            const contextMenu = domShortcut.previousElementSibling;
+            const edit = domShortcut.nextElementSibling;
+            const editMenu = edit.childNodes[0];
+            const menuList = contextMenu.firstChild;
+            const nameInput = editMenu.childNodes[0];
+            const urlInput = editMenu.childNodes[1];
+            const editBtn = menuList.childNodes[0];
+            const delBtn = menuList.childNodes[1];
+            const iconBtn = menuList.childNodes[2];
+            
+            let editStatus = false;
+
+            function toggleEdit() {
+                if (editStatus) {
+                    edit.classList.toggle('show');
+                    editStatus = !editStatus;
+
+                    background.classList.remove('blur-effect');
+                } else {
+                    edit.classList.toggle('show');
+                    editStatus = !editStatus;
+
+                    background.classList.add('blur-effect');
+
+                    // Populate input values
+                    nameInput.value = shortcuts[i].name;
+                    urlInput.value = shortcuts[i].url;
+                }
+            }
+
+            editBtn.addEventListener('click', function() {
+                toggleEdit();
+            });
+
+            // Toggle edit window on click of config gear
+            gear.addEventListener('click', function(event) {
+                event.stopPropagation();
+                if (editStatus) {
+                    toggleEdit();
+                }
+            });
+
+            // Close edit window on click of body
+            document.body.addEventListener('mousedown', function(event) {
+                if (editStatus && !edit.contains(event.target) && event.target !== editBtn) {
+                    toggleEdit();
+                }
+            });
+
+            let nameString = shortcuts[i].name;
+            let urlString = shortcuts[i].url;
+
+            // Fetch input values
+            nameInput.addEventListener('input', function() {
+                nameString = nameInput.value;
+            });
+
+            urlInput.addEventListener('input', function() {
+                urlString = urlInput.value;
+            });
+
+            const editSubmit = document.querySelector(".shortcut-submit-" + i);
+
+            editSubmit.addEventListener('click', function() {
+                shortcuts[i].name = nameString;
+                shortcuts[i].url = urlString;
+
+                localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+
+                shortcutbar.innerHTML = "";
+
+                parseShortcuts();
+            });
+
+            // Get icon file input element
+            const iconInput = document.getElementById("icon-input-" + i);
+
+            iconInput.addEventListener('change', function() {
+                // Get icon image file object
+                const iconFile = iconInput.files[0];
+
+                // Get the file name
+                const fileName = iconFile.name;
+
+                // Parse into path
+                let path = './imgs/logos/' + fileName;
+
+                shortcuts[i].logo = path;
+
+                localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+
+                shortcutbar.innerHTML = "";
+
+                parseShortcuts();
+            })
+        
+            delBtn.addEventListener('click', function() {
+                shortcuts.splice(i, 1);
+
+                localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+
+                shortcutbar.innerHTML = "";
+
+                parseShortcuts();
+            });
+        });
+    }
+
+    // Get new shortcut element
+    const shortcutInput = document.querySelector('.shortcut-new');
+
+    shortcutInput.addEventListener('click', function() {
+        toggleConfig();
+
+        const newShortcut = document.querySelector('.new-container');
+        const newMenu = document.querySelector('.new');
+        const nameInput = document.getElementById('new-name-input');
+        const urlInput = document.getElementById('new-url-input');
+        const iconInput = document.getElementById('new-icon-input');
+        const newSubmit = document.querySelector('.new-shortcut-submit');
+        
+        let newStatus = false;
+
+        function toggleNew() {
+            if (newStatus) {
+                newShortcut.classList.toggle('show');
+                newStatus = !newStatus;
+
+                background.classList.remove('blur-effect');
+            } else {
+                newShortcut.classList.toggle('show');
+                newStatus = !newStatus;
+
+                background.classList.add('blur-effect');
+            }
+        }
+
+        toggleNew();
+
+        // Toggle new window on click of config gear
+        gear.addEventListener('click', function(event) {
+            event.stopPropagation();
+            if (newStatus) {
+                toggleNew();
+            }
+        });
+
+        // Close new window on click of body
+        document.body.addEventListener('mousedown', function(event) {
+            if (newStatus && !newShortcut.contains(event.target) && event.target !== shortcutInput) {
+                toggleNew();
+            }
+        });
+
+        let nameString = '';
+        let urlString = '';
+        let iconPath = '';
+
+        // Fetch input values
+        nameInput.addEventListener('input', function() {
+            nameString = nameInput.value;
+        });
+
+        urlInput.addEventListener('input', function() {
+            urlString = urlInput.value;
+        });
+
+        // Define the event listener function
+        const submitHandler = function(event) {
+            event.preventDefault();
+            toggleNew();
+            const iconFile = iconInput.files[0];
+            let fileName = ''
+            if (iconFile) {
+                fileName = iconFile.name;
+            }
+            iconPath = './imgs/logos/' + fileName;
+
+            shortcuts.push({
+                name: nameString,
+                url: urlString,
+                logo: iconPath
+            })
+
+            localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
+
+            shortcutbar.innerHTML = "";
+
+            parseShortcuts();
+
+            newMenu.reset();
+            nameString = '';
+            urlString = '';
+            iconPath = '';
+            newSubmit.removeEventListener('click', submitHandler);
+        };
+
+        // Add the event listener
+        newSubmit.addEventListener('click', submitHandler);
+    });
 });
