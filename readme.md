@@ -21,14 +21,8 @@ This project, when side-loaded as a Chrome extension, replaces the default `new 
 
 ## Usage:
 
-<<<<<<< HEAD
 * Click the gear at the bottom-left to change the background, the favicon, or create a new shortcut.
 * Right-click a shortcut to edit it or remove it.
 
 > [!IMPORTANT]
 > Icons for shortcuts should be located at /imgs/logos/, while browser favicons and background images whould be at /imgs/.
-=======
-* Icons for shortcuts should be located at /imgs/logos/, while browser favicons and background images whould be at /imgs/.
-* Click the gear at the bottom-left to change the background, the favicon, or create a new shortcut.
-* Right-click a shortcut to edit it or remove it.
->>>>>>> 9e40cffc7235938f16d903ba48af653534c95a6a
