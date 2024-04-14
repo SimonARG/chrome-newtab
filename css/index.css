@@ -249,16 +249,16 @@ ul {
 }
 
 .fillable {
+    font-size: 1.2rem;
     outline: none;
     text-align: center;
-    font-size: 1.2rem;
-    padding: .6rem .7rem;
+    padding: .3rem .5rem;
     background-color: transparent;
     border: 1px dashed white;
     border-left: none;
     border-right: none;
     color: white;
-    width: 22rem;
+    width: 18rem;
 }
 
 .fillable::-moz-selection {
@@ -269,6 +269,15 @@ ul {
 .fillable::selection {
     color: black;
     background: white;
+}
+
+.fillable:hover,
+.fillable:focus {
+    background-color: var(--bg-bookmark-h);
+}
+
+.fillable:active {
+    background-color: var(--bg-bookmark-a);
 }
 
 .btn {
@@ -456,11 +465,34 @@ ul {
 |------------------------------------------------------------
 */
 
-.searchbar {
+.searchbar-container {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40%;
+}
+
+.searchbar {
+    outline: none;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: .6rem .7rem;
+    background-color: transparent;
+    border: 1px dashed white;
+    border-left: none;
+    border-right: none;
+    color: white;
+    width: 22rem;
+}
+    
+.searchbar::-moz-selection {
+    color: black;
+    background: white;
+}
+    
+.searchbar::selection {
+    color: black;
+    background: white;
 }
 
 /*
@@ -544,6 +576,7 @@ ul {
 
 .config {
     padding: .5rem;
+    padding-top: 0;
     gap: .7rem;
 }
 
@@ -551,6 +584,10 @@ ul {
     visibility: visible;
     transition: all .2s;
     opacity: 1;
+}
+
+.title-label {
+    font-size: 1.05rem;
 }
 
 /*
@@ -611,44 +648,6 @@ ul {
     visibility: visible;
     transition: all .2s;
     opacity: 1;
-}
-
-.edit input[type="text"],
-.new input[type="text"] {
-    font-size: 1.2rem;
-    outline: none;
-    text-align: center;
-    padding: .3rem .5rem;
-    background-color: transparent;
-    border: 1px dashed white;
-    border-left: none;
-    border-right: none;
-    color: white;
-    width: 18rem;
-}
-
-.edit input[type="text"]::-moz-selection,
-.new input[type="text"]::-moz-selection {
-    color: black;
-    background: white;
-}
-  
-.edit input[type="text"]::selection,
-.new input[type="text"]::selection {
-    color: black;
-    background: white;
-}
-
-.edit input[type="text"]:hover,
-.edit input[type="text"]:focus,
-.new input[type="text"]:hover,
-.new input[type="text"]:focus {
-    background-color: var(--bg-bookmark-h);
-}
-
-.edit input[type="text"]:active,
-.new input[type="text"]:active {
-    background-color: var(--bg-bookmark-a);
 }
 
 .edit button,

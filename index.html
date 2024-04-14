@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>⠀</title>
+    <title class="tab-title">⠀</title>
 
     <link class="favicon" rel="icon" type="image/x-icon" href="">
 
@@ -25,8 +25,8 @@
             <ul class="bookmark-list"></ul>
         </div>
 
-        <form class="searchbar" method="get" action="https://www.google.com/search">
-            <input autocomplete="off" class="fillable" type="text" name="q">
+        <form class="searchbar-container" method="get" action="https://www.google.com/search">
+            <input class="searchbar" autocomplete="off" type="text" name="q">
         </form>
 
         <div class="links-container flex-r f-just-cent f-al-end">
@@ -39,7 +39,12 @@
 
     <div class="config-container">
         <div class="config flex-c f-just-cent">
-            <input type="file" id="bg-input" hidden>
+            <div class="flex-c f-al-cent">
+                <label class="title-label" for="title-input">Change Tab Title</label>
+                <input class="fillable" type="text" id="title-input" placeholder="new tab">
+            </div>
+
+            <input type="file" id="bg-input" hidden multiple  accept=".jpg, .png, .gif, .webp, .avif, .jpeg, .bmp, .svg, .jfif">
             <label class="bg-btn btn" for="bg-input">Change Background</label>
 
             <input type="file" id="favicon-input" hidden>
@@ -51,8 +56,8 @@
 
     <div class="new-container">
         <form class="new flex-c f-just-cent">
-            <input type="text" id="new-name-input" placeholder="name">
-            <input type="text" id="new-url-input" placeholder="URL">
+            <input class="fillable" type="text" id="new-name-input" placeholder="name">
+            <input class="fillable" type="text" id="new-url-input" placeholder="URL">
             <input type="file" id="new-icon-input" hidden>
             <label class="new-icon-btn btn" for="new-icon-input">Select Icon</label>
             <button class="btn new-shortcut-submit">Done</button>

@@ -183,6 +183,39 @@ async function doTreeStuff() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    // Define initial tab title variable
+    let tabTitle = '⠀';
+
+    // Fetch tab title from local storage
+    tabTitle = localStorage.getItem('tabTitle');
+
+    // Select tab title DOM element and tab title input
+    const tabTitleEl = document.querySelector('.tab-title'),
+          tabTitleInput = document.getElementById('title-input');
+
+    // Set the input's value
+    tabTitleInput.value = tabTitle;
+
+    // Change tab title in real time on user input and save it to local storage
+    tabTitleInput.addEventListener('input', function() {
+        tabTitle = tabTitleInput.value;
+
+        if (tabTitle == '') {
+            tabTitle = '⠀';
+            localStorage.setItem('tabTitle', '⠀');
+            tabTitleEl.innerText = tabTitle;
+        } else {
+            localStorage.setItem('tabTitle', tabTitle);
+            tabTitleEl.innerText = tabTitle;
+        }
+    });
+
+    // Set the tab title DOM element's content on load
+    tabTitleEl.innerText = tabTitle;
+
+    // Define background mode
+    const bgMode = ['static', 'presentation', 'random'];
+
     // Define background image path and DOM element
     let bgPath = '';
     const bg = document.querySelector('.bg');
@@ -209,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const background = document.querySelector(".bg");
 
     // Fetch searchbar
-    const searchbar = document.querySelector('.fillable');
+    const searchbar = document.querySelector('.searchbar');
 
     // Apply filters to background image on interaction with searchbar
     searchbar.addEventListener('mouseenter', function() {
@@ -351,10 +384,12 @@ document.addEventListener("DOMContentLoaded", function() {
             const editDiv = document.createElement("div");
             editDiv.classList.add("edit", "flex-c", "f-just-cent");
             const nameInput = document.createElement("input");
+            nameInput.classList.add('fillable');
             nameInput.type = "text";
             nameInput.id = "name-input-" + i;
             nameInput.placeholder = "name";
             const urlInput = document.createElement("input");
+            urlInput.classList.add('fillable');
             urlInput.type = "text";
             urlInput.id = "url-input-" + i;
             urlInput.placeholder = "URL";
