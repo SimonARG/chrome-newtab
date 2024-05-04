@@ -213,19 +213,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set the tab title DOM element's content on load
     tabTitleEl.innerText = tabTitle;
 
-    // Define background mode
-    const bgMode = ['static', 'presentation', 'random'];
-
-    // Define background image path and DOM element
-    let bgPath = '';
-    const bg = document.querySelector('.bg');
-
-    // Fetch background image path from local storage
-    bgPath = localStorage.getItem("bgPath");
-
-    // Replace img element src attribute
-    bg.src = bgPath;
-
     // Define favicon image path and DOM element
     let faviconPath = '';
     const favicon = document.querySelector('.favicon');
@@ -238,34 +225,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     doTreeStuff();
 
-    // Fetch background image
-    const background = document.querySelector(".bg");
-
-    // Fetch searchbar
-    const searchbar = document.querySelector('.searchbar');
-
-    // Apply filters to background image on interaction with searchbar
-    searchbar.addEventListener('mouseenter', function() {
-        background.classList.add('dark-effect');
-    });
-
-    searchbar.addEventListener('focus', function() {
-        background.classList.add('blur-dark-effect');
-    });
-
-    searchbar.addEventListener('blur', function() {
-        background.classList.remove('blur-dark-effect');
-    });
-
-    searchbar.addEventListener('mouseleave', function() {
-        background.classList.remove('dark-effect');
-    });
-
     // Open or close config popup on click of gear
     const gear = document.querySelector('.gear'),
           config = document.querySelector('.config-container');
 
     let configStatus = false;
+
+    const background = document.querySelector('.bg')
 
     function toggleConfig() {
         config.classList.toggle('show');
@@ -277,7 +243,6 @@ document.addEventListener("DOMContentLoaded", function() {
             background.classList.remove('blur-effect');
         }
     }
-
 
     // Toggle config window on click of gear
     gear.addEventListener('click', function(event) {
@@ -291,26 +256,6 @@ document.addEventListener("DOMContentLoaded", function() {
             toggleConfig();
         }
     });
-
-    // Get background image file input element
-    const bgInput = document.getElementById('bg-input');
-
-    bgInput.addEventListener('change', function() {
-        // Get background image file object
-        const bgFile = bgInput.files[0];
-
-        // Get the file name
-        const fileName = bgFile.name;
-
-        // Parse into path
-        let path = './imgs/' + fileName;
-
-        // Store the file name in local storage
-        localStorage.setItem('bgPath', path);
-
-        // Replace img element src attribute
-        bg.src = path;
-    })
 
     // Get favicon image file input element
     const faviconInput = document.getElementById('favicon-input');

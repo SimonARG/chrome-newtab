@@ -332,6 +332,10 @@ ul {
 |------------------------------------------------------------
 */
 
+body {
+    background-color: black;
+}
+
 .body-container {
     min-height: 100vh; 
     height: 100svh;
@@ -588,6 +592,22 @@ ul {
 
 .title-label {
     font-size: 1.05rem;
+}
+
+.bg-btn {
+    width: 100%;
+}
+
+.bg-arr {
+    font-size: 1.2rem;
+}
+
+.bg-arr-left {
+    border-right: none;
+}
+
+.bg-arr-right {
+    border-left: none;
 }
 
 /*

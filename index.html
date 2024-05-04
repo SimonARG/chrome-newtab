@@ -44,8 +44,12 @@
                 <input class="fillable" type="text" id="title-input" placeholder="new tab">
             </div>
 
-            <input type="file" id="bg-input" hidden multiple  accept=".jpg, .png, .gif, .webp, .avif, .jpeg, .bmp, .svg, .jfif">
-            <label class="bg-btn btn" for="bg-input">Change Background</label>
+            <div class="flex-r f-al-cent f-just-cent">
+                <button class="bg-arr bg-arr-left btn"><</button>
+                <input type="file" id="bg-input" hidden multiple  accept=".jpg, .png, .gif, .webp, .avif, .jpeg, .bmp, .svg, .jfif">
+                <label class="bg-btn btn" for="bg-input">Change Background</label>
+                <button class="bg-arr bg-arr-right btn">></button>
+            </div>
 
             <input type="file" id="favicon-input" hidden>
             <label class="favicon-btn btn" for="favicon-input">Change Tab Icon</label>
@@ -64,6 +68,7 @@
         </form>
     </div>
 
+    <script src="./js/bg.js"></script>
     <script src="./js/index.js"></script>
 </body>
 </html>
