@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title class="tab-title">⠀</title>
-
-    <link class="favicon" rel="icon" type="image/x-icon" href="">
+    <title>⠀</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,1;0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,1;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@400;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
     <div class="bg-container">
-        <img class="bg" src="">
+        <img class="bg" src="" alt="">
     </div>
 
     <div class="body-container">
@@ -29,46 +27,54 @@
             <input class="searchbar" autocomplete="off" type="text" name="q">
         </form>
 
-        <div class="links-container flex-r f-just-cent f-al-end">
-            <div class="shortcutbar links flex-r f-al-cent f-just-cent">
-            </div>
+        <div class="links-container">
+            <div class="shortcutbar"></div>
         </div>
     </div>
 
-    <span class="gear grow-on-hover">⚙</span>
+    <button class="gear grow-on-hover" type="button" aria-label="Settings">⚙</button>
 
     <div class="config-container">
-        <div class="config flex-c f-just-cent">
-            <div class="flex-c f-al-cent">
+        <div class="config">
+            <div class="config-field">
                 <label class="title-label" for="title-input">Change Tab Title</label>
                 <input class="fillable" type="text" id="title-input" placeholder="new tab">
             </div>
 
-            <div class="flex-r f-al-cent f-just-cent">
-                <button class="bg-arr bg-arr-left btn"><</button>
-                <input type="file" id="bg-input" hidden multiple  accept=".jpg, .png, .gif, .webp, .avif, .jpeg, .bmp, .svg, .jfif">
+            <div class="config-row">
+                <button class="bg-arr bg-arr-left btn" type="button">&lt;</button>
+                <input type="file" id="bg-input" hidden multiple accept=".jpg,.png,.gif,.webp,.avif,.jpeg,.bmp,.svg,.jfif">
                 <label class="bg-btn btn" for="bg-input">Change Background</label>
-                <button class="bg-arr bg-arr-right btn">></button>
+                <button class="bg-arr bg-arr-right btn" type="button">&gt;</button>
             </div>
 
             <input type="file" id="favicon-input" hidden>
             <label class="favicon-btn btn" for="favicon-input">Change Tab Icon</label>
 
-            <span class="shortcut-new btn">New Shortcut</span>
+            <button class="shortcut-new btn" type="button">New Shortcut</button>
         </div>
     </div>
 
     <div class="new-container">
-        <form class="new flex-c f-just-cent">
+        <form class="new-form">
             <input class="fillable" type="text" id="new-name-input" placeholder="name">
             <input class="fillable" type="text" id="new-url-input" placeholder="URL">
             <input type="file" id="new-icon-input" hidden>
             <label class="new-icon-btn btn" for="new-icon-input">Select Icon</label>
-            <button class="btn new-shortcut-submit">Done</button>
+            <button class="btn" type="submit">Done</button>
         </form>
     </div>
 
-    <script src="./js/bg.js"></script>
-    <script src="./js/index.js"></script>
+    <div class="edit-container">
+        <form class="edit-form">
+            <input class="fillable" type="text" id="edit-name-input" placeholder="name">
+            <input class="fillable" type="text" id="edit-url-input" placeholder="URL">
+            <input type="file" id="edit-icon-input" hidden>
+            <label class="btn" for="edit-icon-input">Change Icon</label>
+            <button class="btn" type="submit">Done</button>
+        </form>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>
